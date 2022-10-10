@@ -1,0 +1,56 @@
+<section>
+    <div class="container"> 
+        <div class="">
+            <a href="/admin/add-coupon" class="btn btn-success mt-5">Add Coupon</a>
+        </div>
+        <table class="table" id="coupon">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>No</th>
+                    <th scope="col">Coupon</th>
+                    <th scope="col">Discount <br> Amount</th>
+                    <th scope="col">Expiry <br> Date</th>
+                   
+                    <th scope="col"></th>
+                    
+                </tr>
+            </thead>
+            <tbody>
+                {{#each coupondetails}}
+                <tr>
+                    <td></td>
+                    <td>{{inc @index}} </td>
+                    <td>{{this.coupon}} </td>
+                     <td>{{this.discount}} </td>
+                      <td>{{this.date}} </td>
+                    {{!-- <td>{{this.description}} </td>
+                    <td>₹{{this.price}}</td>
+                    <td><img src="/product-images/{{this._id}}.jpg" style="width: 50px; height: 50px;"></td>
+                    <td>
+                        
+
+                        
+                        <a href="/admin/edit-product/{{this._id}}" class="btn btn-primary">Edit</a> --}}
+                        <td>
+                    <a href="/admin/delete-coupon/{{this._id}}" class="btn btn-danger" onclick="return confirm('Are  you want to delete {{this.Name}} ?')">Delete</a>
+                    </td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+
+</section>
+{{!-- <script>
+    $(document).ready(function () {
+
+
+        $('#coupon').wrap('<div id="hide" style="display:none"/>');
+
+        $('#hide').css('display', 'block');
+    });
+
+
+    var table = $('#coupon').DataTable();
+</script> --}}

@@ -1,0 +1,170 @@
+<body>
+
+    <!-- Start Banner Area -->
+    <section class="banner-area organic-breadcrumb">
+        <div class="container">
+            <div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
+                <div class="col-first">
+                    <h1>Shopping Cart</h1>
+                    <nav class="d-flex align-items-center">
+                        <a href="index.html">Home<span class="lnr lnr-arrow-right"></span></a>
+                        <a href="category.html">Cart</a>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!--================Cart Area =================-->
+    <section class="cart_area">
+        <div class="container">
+            <div class="cart_inner">
+                <div class="table-responsive">
+                    <table class="table" id="myDiv">
+                        <thead>
+                            <tr>
+                                <th scope="col">Product</th>
+                                <th scope="col">Price</th>
+                                <th scope="col">Quantity</th>
+
+                                <th scope="col">Option</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {{#each products}}
+                            <tr>
+                                {{!-- {{#each this.product}} --}}
+                                <td>
+                                    <div class="media">
+                                        <div class="d-flex">
+                                            <img class="img-fluid" src="/product-images/{{this.product.Image.[0]}}"
+                                                style="width: 100px; height: 100px;" alt="">
+                                        </div>
+                                        <div class="media-body">
+                                            <p>{{this.product.name}}</p>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <h5>₹{{this.product.price}}</h5>
+                                </td>
+                                {{!-- {{/each}} --}}
+                                <td>
+                                    <div class="product_count">
+                                        <input type="text" name="qty" id="'{{this.product._id}}'" value=" {{this.quantity}}" 
+                                            title="Quantity:" class="input-text qty">
+                                        <button onclick="changeQuantity('{{this._id}}','{{this.product._id}}',1,'{{this.quantity}}')"
+                                            class="increase items-count" type="button"><i
+                                                class="lnr lnr-chevron-up"></i></button>
+
+                                        <button onclick="changeQuantity('{{this._id}}','{{this.product._id}}',-1,'{{this.quantity}}')"
+                                            class="reduced items-count" type="button"><i
+                                                class="lnr lnr-chevron-down"></i></button>
+                                    </div>
+                                </td>
+
+                                <td>
+                                   
+                                        <button class="btn btn-danger" onclick="removeProduct('{{this._id}}','{{this.product._id}}')">Remove
+
+                                        </button>
+
+                                </td>
+
+                            </tr>
+                            </tr>
+                            {{/each}}
+
+
+                            <tr>
+                                <td>
+
+                                </td>
+                                <td>
+
+                                </td>
+                                <td>
+                                    <h4>Total</h4>
+                                </td>
+                                <td>
+                                    <h4>₹{{total}}</h4>
+                                </td>
+                            </tr>
+
+                            <tr class="out_button_area">
+                                <td>
+
+                                </td>
+                                <td>
+
+                                </td>
+                                <td>
+
+                                </td>
+                                <td>
+                                    <div class="checkout_btn_inner d-flex align-items-center">
+                                        <a class="gray_btn" href="/">Continue Shopping</a>
+                                        <a class="primary-btn" href="/checkout">Proceed to checkout</a>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--================End Cart Area =================-->
+
+
+
+    <script>
+        function changeQuantity(cartId, proId, count,qty) {
+           // let quantity = parseInt(document.getElementById(proId).innerHTML)
+            count = parseInt(count)
+          let quandity = parseInt(qty)
+           
+            $.ajax({
+                url: '/change-product-quantity',
+                data: {
+                    cart: cartId,
+                    product: proId,
+                    count: count,
+                    quantity:quandity
+                },
+                method: 'post',
+                success: (response) => {
+                    if (response.removeProduct) {
+                        window.location.reload();
+                    } else {
+                        $("#myDiv").load(location.href+" #myDiv");
+                       //window.location.reload();
+                        document.getElementById(proId).innerHTML = quantity + count
+                    }
+                }
+            })
+
+        }
+
+        function removeProduct(cartId,proId){
+            $.ajax({
+                url:'/delete-cart/'+cartId+'/'+proId,
+                method:'get',
+                success:(response)=>{
+                    if(response.removeProduct){
+                        //alert('Do you want to remove the product')
+                        Swal.fire(
+  'Product removed!',
+  'You clicked the button!',
+  'success'
+)
+                        //location.reload()
+                        $("#myDiv").load(location.href + " #myDiv");
+                        $("#cart-count").load(location.href+" #cart-count");
+                    }
+                }
+            })
+        }
+
+    </script>

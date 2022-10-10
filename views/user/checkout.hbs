@@ -1,0 +1,473 @@
+
+
+
+
+    <!-- Start Header Area -->
+	
+	<!-- End Header Area -->
+
+    <!-- Start Banner Area -->
+    <section class="banner-area organic-breadcrumb">
+        <div class="container">
+            <div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
+                <div class="col-first">
+                    <h1>Checkout</h1>
+                    <nav class="d-flex align-items-center">
+                        <a href="index.html">Home<span class="lnr lnr-arrow-right"></span></a>
+                        <a href="single-product.html">Checkout</a>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- End Banner Area -->
+
+    <!--================Checkout Area =================-->
+    <section class="checkout_area section_gap">
+        <div class="container">
+           <div class="cupon_area">
+                <div class="check_title">
+                    <h2>Have a coupon? </h2>
+                </div>
+
+                {{#each viewCoupon}}
+                <div>
+                    
+					<input type="text" value="{{this.coupon}}" id="myInput" style="color: red; font-weight: bold">
+                     <button onclick="myFunction()" class="tp_btn ml-4">Copy</button>
+                     
+				</div>
+                {{/each}}
+                
+               
+                     <input type="text" placeholder="Enter coupon code" id="couponCode">
+                <button onclick="applyCoupon()" type="submit" class="tp_btn">Apply Coupon</button>
+
+               
+               
+                {{!-- <a class="tp_btn" href="#">Apply Coupon</a> --}}
+            </div>
+           
+            <div class="billing_details">
+                <div class="row">
+                    <div class="col-lg-8">
+                        <h3>Billing Details</h3>
+                        <form action="/placeorder" class="row contact_form" method="post" novalidate="novalidate" id="checkout">
+                            <div class="col-md-6 form-group p_star">
+                                <input type="text" class="form-control" id="first" name="name" placeholder="Name" value="{{selectAddress.name}}">
+                                
+                            </div>
+                           
+                            <div class="col-md-6 form-group p_star">
+                                <input type="tel" class="form-control" id="number" name="mobile" placeholder="Mobile" value="{{selectAddress.mobile}}">
+                               
+                            </div>
+                            <div class="col-md-6 form-group p_star">
+                                <input type="email" class="form-control" id="email" name="email" placeholder="Email" value="{{selectAddress.email}}">
+                                
+                            </div>
+                           
+                            <div class="col-md-12 form-group p_star">
+                                <input type="text" class="form-control" id="add1" name="address" placeholder="Address" value="{{selectAddress.address}}">
+                                {{!-- <span class="placeholder" data-placeholder="Address line 01"></span> --}}
+                            </div>
+                            <div class="col-md-12 form-group p_star">
+                                <input type="text" class="form-control" id="district" name="district" placeholder="District" value="{{selectAddress.district}}">
+                                {{!-- <span class="placeholder" data-placeholder="Address line 02"></span> --}}
+                            </div>
+                            <div class="col-md-12 form-group p_star">
+                                <input type="text" class="form-control" id="town" name="town" placeholder="Town/City" value="{{selectAddress.town}}">
+                                
+                                {{!-- <span class="placeholder" data-placeholder="Town/City"></span> --}}
+                            </div>
+                           
+                            <div class="col-md-12 form-group">
+                                <input type="text" class="form-control" id="post" name="pincode" placeholder="Pincode"  value="{{selectAddress.pincode}}">
+                            </div>
+                            <div class="col-md-12 form-group">
+                                <input type="text" class="form-control" id="state" name="state" placeholder="State" value="{{selectAddress.state}}">
+                                {{!-- <input type="text" name="usrID" value="{{user._id}}"> --}}
+                                <input type="text"  id="userId" value="{{userId}}" hidden>
+                            </div>
+
+                            
+
+
+
+                            <div>
+                      <input type="text" name="Couponname" id="Couponname" value="" hidden>
+                    </div>
+                    <div>
+                      <input type="text" name="Discount" id="Discount" value="" hidden>
+                    </div>
+                    <div>
+                      <input type="text" name="grandtotal" id="grandtotal" value="" hidden>
+                    </div>
+                     <div>
+                      <input type="text" name="" id="" value="{{total}}" hidden>
+                    </div>
+                           
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="order_box">
+                           
+
+                            <h2>Your Order</h2>
+                            <ul class="list">
+                                <li><a href="#">Product <span>Total</span></a></li>
+                                 {{#each products}}
+                                <li><a href="#">{{this.product.name}} <span class="middle"></span>X{{this.quantity}}
+                                 {{/each}}
+                                   
+                                 <span class="last">₹{{total}}</span></a></li>
+                                {{!-- <li><a href="#">Fresh Tomatoes <span class="middle">x 02</span> <span class="last">$720.00</span></a></li>
+                                <li><a href="#">Fresh Brocoli <span class="middle">x 02</span> <span class="last">$720.00</span></a></li> --}}
+                            </ul>
+
+                            <ul class="list-group list-group-flush">
+                        <li
+                          class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0 text-muted">
+                          Subtotal
+                          <span id="total">{{total}}</span>
+                        </li>
+                         <li
+                          class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0 text-muted">
+                          Discount
+                          <span id="discount">0</span>
+                        </li>
+                        <li
+                          class="list-group-item d-flex justify-content-between align-items-center px-0 fw-bold text-uppercase">
+                          Total Amount Rs:
+                          <span id="Grandtotal">0</span>
+                        </li>
+                      </ul>
+
+
+                           
+                            {{!-- <ul class="list list_2">
+                              
+                                <li><a id="total">Total <span>₹{{total}}</span></a></li>
+                            </ul> --}}
+                            
+
+                            <div class="payment_item">
+                                <div class="radion_btn">
+                                    <input type="radio" id="f-option5" name="payment-method" value="COD">
+                                    <label for="f-option5">Cash on delivery</label>
+                                    <div class="check"></div>
+                                </div>
+                                {{!-- <p>Please send a check to Store Name, Store Street, Store Town, Store State / County,
+                                    Store Postcode.</p> --}}
+                            </div>
+                            <div class="payment_item active">
+                                <div class="radion_btn">
+                                    <input type="radio" id="f-option6" name="payment-method" value="ONLINE">
+                                    <label for="f-option6">Razorpay </label>
+                                    <img src="img/product/card.jpg" alt="">
+                                    <div class="check"></div>
+                                </div>
+                                {{!-- <p>Pay via Razorpay; you can pay with your credit card if you don’t have a PayPal
+                                    account.</p> --}}
+                            </div>
+                            {{!-- <div class="creat_account">
+                                <input type="checkbox" id="f-option4" name="selector">
+                                <label for="f-option4">I’ve read and accept the </label>
+                                <a href="#">terms & conditions*</a>
+                            </div> --}}
+                            {{!-- <a class="primary-btn" href="/placeorder">Place Order</a> --}}
+                            <button type="submit" class="primary-btn">Place order</button>
+                        </div>
+                    </div>
+                    </form>
+                </div>
+
+
+                <div class="accordion" id="accordionExample">
+                     {{#each userAddress}}
+  <div class="card">
+    <div class="card-header" id="headingOne">
+      <h2 class="mb-0">
+        <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+          Address:  {{inc @index}}
+        </button>
+      </h2>
+    </div>
+
+    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+      <div class="card-body">
+
+       
+        <p>Name:{{this.name}}</p>
+         <p>Email:{{this.email}}</p>
+          <p>Mobile:{{this.mobile}}</p>
+         
+         <p>Address:{{this.address}}</p>
+          <p>Town/City:{{this.town}}</p>
+           <p>District:{{this.district}}</p>
+            <p>State:{{this.state}}</p>
+             <p>Pincode:{{this.pincode}}</p>
+      </div>
+      <div>
+        <a href="/checkout?id={{this.id}}" class="tp_btn ml-3">Select</a>
+        {{!-- <button type="submit" class="tp_btn ml-3">Select</button> --}}
+      </div>
+    </div>
+  </div>
+ {{/each}}
+  
+</div>
+            </div>
+        </div>
+    </section>
+    <!--================End Checkout Area =================-->
+
+    <!-- start footer Area -->
+    <footer class="footer-area section_gap">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3  col-md-6 col-sm-6">
+                    <div class="single-footer-widget">
+                        <h6>About Us</h6>
+                        <p>
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt
+                            ut labore dolore
+                            magna aliqua.
+                        </p>
+                    </div>
+                </div>
+                <div class="col-lg-4  col-md-6 col-sm-6">
+                    <div class="single-footer-widget">
+                        <h6>Newsletter</h6>
+                        <p>Stay update with our latest</p>
+                        <div class="" id="mc_embed_signup">
+
+                            <form target="_blank" novalidate="true" action="https://spondonit.us12.list-manage.com/subscribe/post?u=1462626880ade1ac87bd9c93a&amp;id=92a4423d01"
+                                method="get" class="form-inline">
+
+                                <div class="d-flex flex-row">
+
+                                    <input class="form-control" name="EMAIL" placeholder="Enter Email" onfocus="this.placeholder = ''"
+                                        onblur="this.placeholder = 'Enter Email '" required="" type="email">
+
+
+                                    <button class="click-btn btn btn-default"><i class="fa fa-long-arrow-right"
+                                            aria-hidden="true"></i></button>
+                                    <div style="position: absolute; left: -5000px;">
+                                        <input name="b_36c4fd991d266f23781ded980_aefe40901a" tabindex="-1" value=""
+                                            type="text">
+                                    </div>
+
+                                    <!-- <div class="col-lg-4 col-md-4">
+													<button class="bb-btn btn"><span class="lnr lnr-arrow-right"></span></button>
+												</div>  -->
+                                </div>
+                                <div class="info"></div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3  col-md-6 col-sm-6">
+                    <div class="single-footer-widget mail-chimp">
+                        <h6 class="mb-20">Instragram Feed</h6>
+                        <ul class="instafeed d-flex flex-wrap">
+                            <li><img src="img/i1.jpg" alt=""></li>
+                            <li><img src="img/i2.jpg" alt=""></li>
+                            <li><img src="img/i3.jpg" alt=""></li>
+                            <li><img src="img/i4.jpg" alt=""></li>
+                            <li><img src="img/i5.jpg" alt=""></li>
+                            <li><img src="img/i6.jpg" alt=""></li>
+                            <li><img src="img/i7.jpg" alt=""></li>
+                            <li><img src="img/i8.jpg" alt=""></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-6 col-sm-6">
+                    <div class="single-footer-widget">
+                        <h6>Follow Us</h6>
+                        <p>Let us be social</p>
+                        <div class="footer-social d-flex align-items-center">
+                            <a href="#"><i class="fa fa-facebook"></i></a>
+                            <a href="#"><i class="fa fa-twitter"></i></a>
+                            <a href="#"><i class="fa fa-dribbble"></i></a>
+                            <a href="#"><i class="fa fa-behance"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom d-flex justify-content-center align-items-center flex-wrap">
+                <p class="footer-text m-0"><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+</p>
+            </div>
+        </div>
+    </footer>
+    <!-- End footer Area -->
+
+{{!-- <script src="https://checkout.razorpay.com/v1/checkout.js"></script> --}}
+
+<script>
+    $("#checkout").submit((e)=>{
+    e.preventDefault();
+    $.ajax({
+        url:'/placeorder',
+        method:'post',
+        data:$('#checkout').serialize(),
+        success:(response)=>{
+            alert(response)
+            if(response.codSuccess){
+                location.href='/order'
+            }else{
+                razorpayPayment(response)
+
+            }
+        }
+    })
+})
+			//"key": "rzp_test_9EaiaaFVGAMGq7", // Enter the Key ID generated from the Dashboard
+
+
+function razorpayPayment(order) {
+  console.log(order)
+		var options = {
+			"key": "rzp_test_I54yg0JC93Hxui", // Enter the Key ID generated from the Dashboard
+			"amount": (order.amount)*100, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+			"currency": "INR",
+			"name": "Shoptronics",
+			"description": "Test Transaction",
+			"image": "https://www.canva.com/design/DAFK3SX6FTo/_FBZbqtkI2Ha7kR8XGGcDQ/edit?utm_content=DAFK3SX6FTo&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton",
+			"order_id": order.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+			"handler": function (response) {
+
+				verifyPayment(response, order)
+			},
+			"prefill": {
+				"name": "Gaurav Kumar",
+				"email": "gaurav.kumar@example.com",
+				"contact": "9999999999"
+			},
+			"notes": {
+				"address": "Razorpay Corporate Office"
+			},
+			"theme": {
+				"color": "#3399cc"
+			}
+		};
+
+var rzp1 = new Razorpay(options);
+		rzp1.open();
+}
+		
+        function verifyPayment(payment,order){
+            $.ajax({
+                url:'/verify-payment',
+                data:{
+                    payment,
+                    order
+                },
+                method:'post',
+                success:(response)=>{
+                    if(response.status){
+                        location.href='/order'
+
+                    }else{
+                        alert('payment failed')
+                    }
+
+                }
+            })
+        }
+
+
+	
+</script>
+
+
+	<script>
+function myFunction() {
+  // Get the text field
+  var copyText = document.getElementById("myInput");
+
+  // Select the text field
+  copyText.select();
+  copyText.setSelectionRange(0, 99999); // For mobile devices
+
+  // Copy the text inside the text field
+  navigator.clipboard.writeText(copyText.value);
+  
+  // Alert the copied text
+ Swal.fire('Coupon Copied')
+}
+</script>
+
+
+
+<script>
+
+
+  function applyCoupon() {
+    console.log("applyCoupon");
+    var coupon = document.getElementById('couponCode').value
+
+    console.log(coupon, "here it isssssssssssssss")
+
+    var userId = document.getElementById('userId').value
+
+    console.log(userId, "here it isssssssssssssss")
+
+
+    var total = document.getElementById('total').innerHTML
+
+
+
+
+    console.log(total, "here it isssssssssssssss")
+
+    $.ajax({
+      url: '/apply-coupon',
+      method: 'post',
+      data: {
+        coupon: coupon,
+        userId: userId
+
+      },
+    success: (response) => {
+      console.log(response, "responseresponse")
+      if (response.expirry) {
+        alert('your coupon has expired')
+      } else if (response.used) {
+        alert('coupon is already used')
+      } else if (response.unAvailable) {
+        alert('sorry! its not valid')
+      } else {
+        var discount = response.discount
+        console.log(discount)
+        var Grandtotal = total - discount
+        console.log(Grandtotal)
+        document.getElementById('discount').innerHTML = discount
+
+        document.getElementById('Grandtotal').innerHTML = Grandtotal
+        document.getElementById('Couponname').innerHTML = response.Couponname
+        document.getElementById('Couponname').value = response.Couponname
+        document.getElementById('Grandtotal').value = Grandtotal
+        document.getElementById('grandtotal').value = Grandtotal
+        document.getElementById('discount').value = discount
+        document.getElementById('Discount').value = discount
+        //alert('coupon applied successfully')
+       Swal.fire(
+  'Good job!',
+  'Coupon Applied Successfully!',
+  'success'
+)
+      }
+    }
+    }) 
+  }
+
+
+
+
+</script>
+
+
+

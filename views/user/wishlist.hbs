@@ -1,0 +1,153 @@
+
+
+    <!-- Start Banner Area -->
+    <section class="banner-area organic-breadcrumb">
+        <div class="container">
+            <div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
+                <div class="col-first">
+                    <h1>Wishlist</h1>
+                    <nav class="d-flex align-items-center">
+                        <a href="/">Home<span class="lnr lnr-arrow-right"></span></a>
+                        <a href="/wishlist">wishlist</a>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!--================Cart Area =================-->
+    <section class="cart_area">
+        <div class="container">
+            <div class="cart_inner">
+                <div class="table-responsive">
+                    <table class="table" id="myDiv">
+                        <thead>
+                            <tr>
+                                <th scope="col">Product</th>
+                                <th scope="col">Price</th>
+                                {{!-- <th scope="col">Quantity</th> --}}
+
+                                <th scope="col">Option</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {{#each products}}
+                            <tr>
+                                {{!-- {{#each this.product}} --}}
+                                <td>
+                                    <div class="media">
+                                        <div class="d-flex">
+                                            <img class="img-fluid" src="/product-images/{{this.products.Image.[0]}}"
+                                                style="width: 100px; height: 100px;" alt="">
+                                        </div>
+                                        <div class="media-body">
+                                            <p>{{this.products.name}}</p>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <h5>₹{{this.products.price}}</h5>
+                                </td>
+                                {{!-- {{/each}} --}}
+
+                               
+
+
+                                <td>
+                                    
+                                        <button class="btn btn-danger" onclick="deleteProduct('{{this._id}}','{{this.products._id}}')">Remove
+
+                                        </button>
+                                        <a onclick="addToCart('{{this._id}}')" class="btn btn-success">Add To cart</a>
+
+                                </td>
+
+                            </tr>
+                            </tr>
+                            {{/each}}
+
+
+                            {{!-- <tr>
+                                <td>
+
+                                </td>
+                                <td>
+
+                                </td>
+                               
+                            </tr> --}}
+
+                            <tr class="out_button_area">
+                                <td>
+
+                                </td>
+                                {{!-- <td>
+
+                                </td> --}}
+                                <td>
+
+                                </td>
+                                <td>
+                                    <div class="checkout_btn_inner d-flex align-items-center">
+                                        <a class="gray_btn" href="/">Continue Shopping</a>
+                                        {{!-- <a class="primary-btn" href="/checkout">Proceed to checkout</a> --}}
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+         function deleteProduct(wishId,proId){
+            console.log(proId,"ifshfskfksjfsfu")
+            $.ajax({
+                url:'/delete-wish/'+wishId+'/'+proId,
+                method:'get',
+                success:(response)=>{
+                    if(response.deleteProduct){
+                        //alert('Do you want to remove the product')
+                        Swal.fire(
+  'Product removed!',
+  'You clicked the button!',
+  'success'
+)
+                        //location.reload()
+                        $("#myDiv").load(location.href + " #myDiv");
+                         $("#wish-count").load(location.href+" #wish-count");
+                    }
+                }
+            })
+         }
+
+
+         function addToCart(proId) {
+		$.ajax({
+			url: '/add-to-cart/' + proId,
+			method: 'get',
+			success: (response) => {
+				if (response.status) {
+					let count = $('#cartCount').html()
+					count = parseInt(count) + 1
+					$("#cartCount").html(count)
+					 $("#cart-count").load(location.href+" #cart-count");
+					Swal.fire(
+						'Item added to Cart!',
+						'',
+						'success'
+					)
+				
+			}
+			}
+		})
+	}
+
+
+	
+
+
+    </script>
