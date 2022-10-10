@@ -1205,6 +1205,28 @@ addToCart: (proId, userId) => {
                }
            })
        },
+       verifyUser: (userData) => {
+        let response = {}
+        return new Promise(async (resolve, reject) => {
+        try {
+          
+                let verify = await db.get().collection(collection.USER_COLLECTION).findOne({ email: userData.email })
+
+                if (verify) {
+                    response.status = false
+                    resolve(response)
+                } else {
+                    response.status = true
+                    resolve(response)
+                }
+
+        
+
+        } catch (error) {
+            reject(error)
+        }
+    })
+    },
 
 
 }

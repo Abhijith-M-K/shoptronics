@@ -70,6 +70,11 @@ router.get("/signup", (req, res, next) => {
 
 router.post("/signup", (req, res, next) => {
   try {
+    userHelpers.verifyUser(req.body).then((response) => {
+      console.log(response);
+      if (response.status) {
+        req.session.body = req.body
+        console.log(req.session.body);
     twilioHelpers.doSms(req.body).then((data) => {
       req.session.body = req.body;
 
@@ -78,7 +83,11 @@ router.post("/signup", (req, res, next) => {
       } else {
         res.redirect("/signup");
       }
-    });
+    })
+  }else{
+    res.redirect("/signup");
+  }
+})
   } catch (error) {
     next(error);
   }
