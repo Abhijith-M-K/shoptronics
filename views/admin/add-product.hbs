@@ -4,7 +4,7 @@
       <h2 class="text-center mt-5">Add Products</h2>
       <form action="/admin/add-product" method="post" enctype="multipart/form-data">
         <label for="">Name</label>
-        <input type="text" name="name" class="form-control">
+        <input type="text" name="name" class="form-control" required>
 
         
          <div class="form-floating mb-3 mt-3">
@@ -20,7 +20,7 @@
                             </div>
 
         <label for="">Price</label>
-        <input type="Number" name="price" class="form-control">
+        <input type="Number" name="price" class="form-control" required>
 
         <label for="">Image</label>
         <input type="file" name="Image" multiple class="form-control">
